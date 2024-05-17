@@ -21,7 +21,7 @@ export default function TasksCompletion() {
 
     useEffect(() => {
         setIsLoading(true);
-        axios.get('/api/dashboard/tasks-completion/', getCommonOptions())
+        axios.get('/api/kelas/', getCommonOptions())
             .then((res) => {
                 const { data } = res;
                 if (data) {
