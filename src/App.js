@@ -21,6 +21,7 @@ import RequestResetPassword from "./pages/Auth/RequestResetPassword";
 import ResetPasswordConfirm from "./pages/Auth/ResetPasswordConfirm";
 import ThemeModeProvider from "./contexts/ThemeModeProvider";
 import Admin from "./pages/Admin"
+import Pelanggaran from "./pages/Pelanggaran";
 
 export default function App() {
   return <ThemeModeProvider>
@@ -44,6 +45,9 @@ export default function App() {
                   <Route path="/categories" element={<Categories />} />
                   <Route path="/categories/create" element={<CategoryDetails />} />
                   <Route path={`/categories/edit/:id`} element={<CategoryDetails />} />
+                  <Route path="/pelanggaran" element={<Pelanggaran />} />
+                  <Route path="/pelanggaran/create" element={<CategoryDetails />} />
+                  <Route path={`/pelanggaran/edit/:id`} element={<CategoryDetails />} />
                   <Route path="/tasks" element={<Tasks />} />
                   <Route path="/tasks/create" element={<TaskDetails />} />
                   <Route path="/tasks/edit/:id" element={<TaskDetails />} />

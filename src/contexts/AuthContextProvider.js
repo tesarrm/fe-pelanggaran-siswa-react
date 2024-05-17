@@ -21,7 +21,7 @@ export default function AuthContextProvider({ children }) {
             setIsAuthenticated(false);
             return;
         }
-        axios.get("/api/auth/users/me/", getCommonOptions())
+        axios.get("/api/me/", getCommonOptions())
             .then((res) => {
                 setUser(res.data);
                 setIsAuthenticated(true);

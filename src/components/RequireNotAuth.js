@@ -7,9 +7,9 @@ export default function RequireAuth() {
 
     const { isAuthenticated } = React.useContext(AuthContext);
 
-    if (isAuthenticated === null) {
-        return <div>Loading...</div>
-    }
+    // if (isAuthenticated === null) {
+    //     return <div>Loading...</div>
+    // }
 
     if (isAuthenticated === true) {
         return <Navigate to="/" />

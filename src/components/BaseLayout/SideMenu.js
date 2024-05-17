@@ -35,7 +35,13 @@ const listItems = [
     {
         key: "categories",
         to: "/categories",
-        name: "Categories",
+        name: "Kategori",
+        icon: <CategoryIcon />,
+    },
+    {
+        key: "pelanggaran",
+        to: "/pelanggaran",
+        name: "Pelanggaran",
         icon: <CategoryIcon />,
     },
 ];

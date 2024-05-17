@@ -21,20 +21,7 @@ import useRequestResource from "src/hooks/useRequestResource";
 
 import ColorBox from "src/components/ColorBox";
 
-// const results = [
-//     {
-//         id: 1,
-//         name: "Feature",
-//         color: "cccccc"
-//     },
-//     {
-//         id: 2,
-//         name: "Bug",
-//         color: "eeeeee"
-//     }
-// ]
-
-export default function Categories() {
+export default function Pelanggaran() {
   const { getResourceList, resourceList, deleteResource } = useRequestResource({
     endpoint: "pelanggaran_kategori",
     resourceLabel: "Category",

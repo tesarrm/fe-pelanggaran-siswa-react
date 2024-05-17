@@ -63,8 +63,8 @@ export default function useRequestAuth() {
         // axios.post("/api/auth/token/login/", { username, password })
         axios.post("/api/login/", { username, password })
             .then((res) => {
-                const { auth_token } = res.data;
-                localStorage.setItem("authToken", auth_token);
+                const { token } = res.data;
+                localStorage.setItem("authToken", token);
                 setLoading(false);
                 setIsAuthenticated(true);
             }).catch(handleRequestError)
