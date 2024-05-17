@@ -183,7 +183,7 @@ export default function CategoryDetails() {
   const { addResource, resource, getResource, updateResource } =
     useRequestResource({
       endpoint: "pelanggaran_kategori",
-      resourceLabel: "Category",
+      resourceLabel: "Pelanggaran Kategori",
     });
 
   const [initialValues, setInitialValues] = useState({

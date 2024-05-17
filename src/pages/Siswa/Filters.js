@@ -97,7 +97,23 @@ export default function Filters({ onSubmit }) {
                                 <TextField
                                     size="small"
                                     id="title"
-                                    label="Title"
+                                    label="NIS"
+                                    type="search"
+                                    {...formik.getFieldProps("search")}
+                                />
+                            </FormControl>
+                            <FormControl
+                                sx={{
+                                    width: isBelowMedium ? "100%" : 160,
+                                    marginRight: (theme) => theme.spacing(1),
+                                    marginBottom: (theme) => theme.spacing(2),
+                                }}
+                                variant="outlined"
+                            >
+                                <TextField
+                                    size="small"
+                                    id="title"
+                                    label="Nama"
                                     type="search"
                                     {...formik.getFieldProps("search")}
                                 />
@@ -111,7 +127,7 @@ export default function Filters({ onSubmit }) {
                                 }}
                                 variant="outlined"
                             >
-                                <InputLabel id="category-label">Category</InputLabel>
+                                <InputLabel id="category-label">Kelas</InputLabel>
                                 <Select
                                     labelId="category-label"
                                     label="Category"
@@ -148,7 +164,7 @@ export default function Filters({ onSubmit }) {
                                 }}
                                 variant="outlined"
                             >
-                                <InputLabel id="completion-label">Status</InputLabel>
+                                <InputLabel id="completion-label">Ortu</InputLabel>
                                 <Select
                                     labelId="completion-label"
                                     label="Status"
@@ -166,7 +182,7 @@ export default function Filters({ onSubmit }) {
                                 </Select>
                             </FormControl>
 
-                            <FormControl
+                            {/* <FormControl
                                 sx={{
                                     width: isBelowMedium ? "100%" : 160,
                                     marginRight: (theme) => theme.spacing(1),
@@ -209,7 +225,7 @@ export default function Filters({ onSubmit }) {
                                         );
                                     })}
                                 </Select>
-                            </FormControl>
+                            </FormControl> */}
 
                             <Box sx={{ marginBottom: (theme) => theme.spacing(2) }}>
                                 <Button

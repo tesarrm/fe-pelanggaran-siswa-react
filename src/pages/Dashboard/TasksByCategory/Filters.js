@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
     FormControl,
     Box,
@@ -9,27 +9,29 @@ import {
 } from "@mui/material";
 import { Formik } from "formik";
 import PropTypes from "prop-types";
-
-const completionFilters = [
-    {
-        label: "All",
-        value: "all",
-    },
-    {
-        label: "Pending",
-        value: "False",
-    },
-    {
-        label: "Completed",
-        value: "True",
-    },
-];
+import axios from "axios";
 
 const initialValues = {
-    completed: "False",
+    kategori: "all",
 };
 
 export default function Filters({ setQueries }) {
+    const [categories, setCategories] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        setIsLoading(true);
+        axios.get("/api/pelanggaran_kategori", { /* tambahkan opsi yang sesuai */ })
+            .then((response) => {
+                setCategories(response.data);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                console.error("Error fetching categories:", error);
+                setIsLoading(false);
+            });
+    }, []);
+
     const handleSubmit = (values) => {
         setQueries(values);
     };
@@ -58,21 +60,20 @@ export default function Filters({ setQueries }) {
                                     }}
                                     variant="outlined"
                                 >
-                                    <InputLabel id="category-label">Status</InputLabel>
+                                    <InputLabel id="category-label">Kategori</InputLabel>
                                     <Select
-                                        labelId="completed-label"
-                                        label="Status"
-                                        id="filter-completed"
+                                        labelId="kategori-label"
+                                        label="Kategori"
+                                        id="filter-kategori"
                                         size="small"
-                                        {...formik.getFieldProps("completed")}
+                                        {...formik.getFieldProps("kategori")}
                                     >
-                                        {completionFilters.map((c) => {
-                                            return (
-                                                <MenuItem value={c.value} key={c.value}>
-                                                    <div style={{ display: "flex" }}>{c.label}</div>
-                                                </MenuItem>
-                                            );
-                                        })}
+                                        <MenuItem value="all">All</MenuItem>
+                                        {categories.map((category) => (
+                                            <MenuItem key={category.id} value={category.id}>
+                                                {category.nama}
+                                            </MenuItem>
+                                        ))}
                                     </Select>
                                 </FormControl>
 
@@ -82,6 +83,7 @@ export default function Filters({ setQueries }) {
                                         size="medium"
                                         variant="contained"
                                         color="primary"
+                                        disabled={isLoading}
                                     >
                                         Filter
                                     </Button>

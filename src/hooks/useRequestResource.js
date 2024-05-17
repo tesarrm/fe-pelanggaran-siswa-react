@@ -41,7 +41,7 @@ export default function useRequestResource({ endpoint, resourceLabel }) {
 
     const addResource = useCallback((values, successCallback) => {
         setLoading(true);
-        axios.post(`/api/${endpoint}/`, values, getCommonOptions())
+        axios.post(`http://localhost:8000/api/${endpoint}/`, values, getCommonOptions())
             .then(() => {
                 setLoading(false);
                 enqueueSnackbar(`${resourceLabel} added`)

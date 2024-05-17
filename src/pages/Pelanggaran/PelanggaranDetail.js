@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
-import { Grid, TextField, Typography, Paper, Button, Box } from "@mui/material";
+import { Grid, TextField, Typography, Paper, Button, Box, MenuItem } from "@mui/material";
 import * as yup from "yup";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useRequestResource from "src/hooks/useRequestResource";
@@ -8,7 +8,6 @@ import useRequestResource from "src/hooks/useRequestResource";
 const validationSchema = yup.object({
   nama: yup.string().required("Nama is required").max(100, "Max length is 100"),
   siswa: yup.string().required("Siswa is required"),
-  poin: yup.number().required("Poin is required"),
   catatan: yup.string().required("Catatan is required"),
   tgl_jam: yup.date().required("Tanggal dan Jam is required"),
 });
@@ -17,6 +16,16 @@ export default function PelanggaranDetail() {
   const { addResource, resource, getResource, updateResource } = useRequestResource({
     endpoint: "pelanggaran",
     resourceLabel: "Pelanggaran",
+  });
+
+  const { getResourceList: getKategoriResourceList, resourceList: kategoriResourceList } = useRequestResource({
+    endpoint: "pelanggaran_kategori",
+    resourceLabel: "Kategori",
+  });
+
+  const { getResourceList: getSiswaResourceList, resourceList: siswaResourceList } = useRequestResource({
+    endpoint: "siswa",
+    resourceLabel: "Siswa",
   });
 
   const [initialValues, setInitialValues] = useState({
@@ -34,7 +43,9 @@ export default function PelanggaranDetail() {
     if (id) {
       getResource(id);
     }
-  }, [id, getResource]);
+    getKategoriResourceList();
+    getSiswaResourceList();
+  }, [id, getResource, getKategoriResourceList, getSiswaResourceList]);
 
   useEffect(() => {
     if (resource) {
@@ -47,6 +58,12 @@ export default function PelanggaranDetail() {
       });
     }
   }, [resource]);
+
+  const handleKategoriChange = (e, formik) => {
+    const selectedKategori = kategoriResourceList.results.find(kategori => kategori.nama === e.target.value);
+    formik.setFieldValue("nama", selectedKategori.nama);
+    formik.setFieldValue("poin", selectedKategori.poin);
+  };
 
   const handleSubmit = (values) => {
     const formattedValues = {
@@ -90,19 +107,28 @@ export default function PelanggaranDetail() {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <TextField
+                  select
                   fullWidth
                   id="nama"
-                  label="Nama"
+                  label="Nama Pelanggaran"
                   {...formik.getFieldProps("nama")}
                   error={formik.touched.nama && Boolean(formik.errors.nama)}
                   helperText={formik.touched.nama && formik.errors.nama}
                   InputLabelProps={{
                     shrink: true,
                   }}
-                />
+                  onChange={(e) => handleKategoriChange(e, formik)}
+                >
+                  {kategoriResourceList.results.map((kategori) => (
+                    <MenuItem key={kategori.id} value={kategori.nama}>
+                      {kategori.nama}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  select
                   fullWidth
                   id="siswa"
                   label="Siswa"
@@ -112,7 +138,13 @@ export default function PelanggaranDetail() {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                />
+                >
+                  {siswaResourceList.results.map((siswa) => (
+                    <MenuItem key={siswa.id} value={siswa.nama}>
+                      {siswa.nama}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -125,6 +157,7 @@ export default function PelanggaranDetail() {
                   InputLabelProps={{
                     shrink: true,
                   }}
+                  disabled
                 />
               </Grid>
               <Grid item xs={12}>
@@ -166,7 +199,7 @@ export default function PelanggaranDetail() {
                 >
                   <Button
                     component={Link}
-                    to="/categories"
+                    to="/pelanggaran"
                     size="medium"
                     variant="outlined"
                     sx={{ mr: 2 }}

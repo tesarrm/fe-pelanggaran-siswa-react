@@ -10,6 +10,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import CategoryIcon from "@mui/icons-material/Category";
 import DashboardIcon from "@mui/icons-material/Dashboard"
+import PersonIcon from '@mui/icons-material/Person';
 import ListAltIcon from "@mui/icons-material/ListAlt";
 
 import { NavLink } from "react-router-dom";
@@ -27,10 +28,10 @@ const listItems = [
         icon: <DashboardIcon />
     },
     {
-        key: "tasks",
-        to: "/tasks",
-        name: "Tasks",
-        icon: <ListAltIcon />
+        key: "siswa",
+        to: "/siswa",
+        name: "Siswa",
+        icon: <PersonIcon />
     },
     {
         key: "categories",

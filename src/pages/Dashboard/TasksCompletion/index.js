@@ -14,38 +14,62 @@ import StatCard from "./StatCard";
 export default function TasksCompletion() {
     const [isLoading, setIsLoading] = useState(false);
     const [completionStats, setCompletionStats] = useState({
-        completed: null,
-        pending: null
+        totalSiswa: null,
+        totalPelanggaranKategori: null,
+        totalPelanggaran: null
     });
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
         setIsLoading(true);
-        axios.get('/api/kelas/', getCommonOptions())
+        axios.get('/api/siswa', getCommonOptions())
             .then((res) => {
                 const { data } = res;
                 if (data) {
-                    const stats = {};
-                    data.forEach(d => {
-                        if (d.completed === true) {
-                            stats.completed = d.count;
-                            return;
-                        }
-                        if (d.completed === false) {
-                            stats.pending = d.count
-                        }
-                    })
-                    setCompletionStats(stats);
-                    setIsLoading(false);
+                    setCompletionStats(prevState => ({
+                        ...prevState,
+                        totalSiswa: data.length
+                    }));
                 }
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 const formattedError = formatHttpApiError(err);
                 enqueueSnackbar(formattedError);
-                setIsLoading(false);
-            })
-    }, [enqueueSnackbar, setIsLoading])
+            });
 
-    const totalTasksCount = (completionStats.pending || 0) + (completionStats.completed || 0)
+        axios.get('/api/pelanggaran_kategori', getCommonOptions())
+            .then((res) => {
+                const { data } = res;
+                if (data) {
+                    setCompletionStats(prevState => ({
+                        ...prevState,
+                        totalPelanggaranKategori: data.length
+                    }));
+                }
+            })
+            .catch((err) => {
+                const formattedError = formatHttpApiError(err);
+                enqueueSnackbar(formattedError);
+            });
+
+        axios.get('/api/pelanggaran', getCommonOptions())
+            .then((res) => {
+                const { data } = res;
+                if (data) {
+                    setCompletionStats(prevState => ({
+                        ...prevState,
+                        totalPelanggaran: data.length
+                    }));
+                }
+            })
+            .catch((err) => {
+                const formattedError = formatHttpApiError(err);
+                enqueueSnackbar(formattedError);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    }, [enqueueSnackbar]);
 
     return (
         <Box sx={{
@@ -54,20 +78,20 @@ export default function TasksCompletion() {
         }}>
             <Grid container spacing={3}>
                 <StatCard
-                    title="Total Tasks"
-                    value={totalTasksCount}
+                    title="Total Siswa"
+                    value={completionStats.totalSiswa || 0}
                     loading={isLoading}
                     icon={<AssignmentIcon fontSize="small" />}
                 />
                 <StatCard
-                    title="Tasks Due"
-                    value={completionStats.pending || 0}
+                    title="Total Pelanggaran Kategori"
+                    value={completionStats.totalPelanggaranKategori || 0}
                     loading={isLoading}
                     icon={<AssignmentLateIcon fontSize="small" />}
                 />
                 <StatCard
-                    title="Tasks Completed"
-                    value={completionStats.completed || 0}
+                    title="Total Pelanggaran"
+                    value={completionStats.totalPelanggaran || 0}
                     loading={isLoading}
                     icon={<CheckIcon fontSize="small" />}
                 />

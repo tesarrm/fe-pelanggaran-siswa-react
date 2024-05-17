@@ -13,8 +13,7 @@ import AuthContextProvider from "./contexts/AuthContextProvider";
 import RequireAuth from "./components/RequireAuth";
 import RequireNotAuth from "./components/RequireNotAuth";
 import BaseLayout from "./components/BaseLayout";
-import Tasks from "./pages/Tasks";
-import TaskDetails from "./pages/Tasks/TaskDetails";
+import TaskDetails from "./pages/Siswa/TaskDetails";
 import Dashboard from "./pages/Dashboard";
 import "./index.css";
 import RequestResetPassword from "./pages/Auth/RequestResetPassword";
@@ -23,6 +22,8 @@ import ThemeModeProvider from "./contexts/ThemeModeProvider";
 import Admin from "./pages/Admin"
 import Pelanggaran from "./pages/Pelanggaran";
 import PelanggaranDetail from "./pages/Pelanggaran/PelanggaranDetail";
+import Siswa from "./pages/Siswa";
+import SiswaDetail from "./pages/Siswa/SiswaDetail";
 
 export default function App() {
   return <ThemeModeProvider>
@@ -51,9 +52,9 @@ export default function App() {
                   <Route path="/pelanggaran/create" element={<PelanggaranDetail/>} />
                   <Route path={`/pelanggaran/edit/:id`} element={<PelanggaranDetail/>} />
 
-                  <Route path="/tasks" element={<Tasks />} />
-                  <Route path="/tasks/create" element={<TaskDetails />} />
-                  <Route path="/tasks/edit/:id" element={<TaskDetails />} />
+                  <Route path="/siswa" element={<Siswa/>} />
+                  <Route path="/siswa/create" element={<SiswaDetail/>} />
+                  <Route path="/siswa/edit/:id" element={<SiswaDetail/>} />
                   <Route path="/" element={<Dashboard />} />
                 </Route>
 
